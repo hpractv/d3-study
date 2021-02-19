@@ -102,7 +102,7 @@
             },
             {
                 "id": "concourse",
-                "name": "Concourse Vault",
+                "name": "Concourse/Vault",
                 "region": "2290,430 2505,430 2505,670 2290,670",
                 "color": 4
             },
