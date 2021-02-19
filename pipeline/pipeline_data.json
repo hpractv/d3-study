@@ -1,0 +1,148 @@
+{
+    "initiativeWorkflow": [
+        "Initiative Creation",
+        "Grooming",
+        "Task Creation",
+        "Development",
+        "Check In/Commit",
+        "Pull Request"
+    ],
+    "projectTypes": [
+        {
+            "name": "Web Applications/Windows Services",
+            "skip": [],
+            "target": "azure"
+        },
+        {
+            "name": "Database",
+            "skip": [],
+            "target": "azure"
+        },
+        {
+            "name": "Infrastructure",
+            "skip": [
+                0
+            ],
+            "target": "azure"
+        },
+        {
+            "name": "Application Libraries",
+            "skip": [
+                4
+            ],
+            "target": "onpremises"
+        }
+    ],
+    "activities": [
+        "Build",
+        "Test/Scan",
+        "Approve/Attest",
+        "Deploy",
+        "Monitoring & Release Integrity"
+    ],
+    "targets": [
+        {
+            "id": "azure",
+            "name": "Azure"
+        },
+        {
+            "id": "onpremises",
+            "name": "On-Premises"
+        }
+    ],
+    "pipeline_tools": {
+        "current": [
+            {
+                "id": "jira",
+                "name": "Jira",
+                "region": "50,20 1275,20 1275,200 50,200",
+                "color": 1
+            },
+            {
+                "id": "github",
+                "name": "GitHub",
+                "region": "640,20 1525,20 1525,975 1225,975 1225,1150 940,1150 940,215 640,215 ",
+                "color": 8
+            },
+            {
+                "id": "teamcity",
+                "name": "TeamCity/Cake",
+                "region": "640,215 1225,215 1225,755 640,755",
+                "color": 3
+            },
+            {
+                "id": "teamcity",
+                "name": "TeamCity/Cake",
+                "region": "640,975 1225,975 1225,1150 640,1150",
+                "color": 3
+            },
+            {
+                "id": "artifactory",
+                "name": "Artifactory",
+                "region": "2260,340 2475,340 2475,1024 2260,1024",
+                "color": 9
+            },
+            {
+                "id": "octopus",
+                "name": "Octopus",
+                "region": "1525,215 1825,215 1825,1150 1525,1150",
+                "color": 2
+            },
+            {
+                "id": "octopus",
+                "name": "Octopus",
+                "region": "2270,370 2485,370 2485,630 2270,630",
+                "color": 2
+            },
+            {
+                "id": "acr",
+                "name": "Azure Container Registry",
+                "region": "2280,400 2495,400 2495,660 2280,660",
+                "color": 5
+            },
+            {
+                "id": "concourse",
+                "name": "Concourse Vault",
+                "region": "2290,430 2505,430 2505,670 2290,670",
+                "color": 4
+            },
+            {
+                "id": "flyway",
+                "name": "Flyway",
+                "region": "650,575 900,575 900,750 650,750",
+                "color": 5
+            },
+            {
+                "id": "flyway",
+                "name": "Flyway",
+                "region": "1550,575 1800,575 1800,750 1550,750",
+                "color": 5
+            },
+            {
+                "id": "appinsights",
+                "name": "Azure App Insights",
+                "region": "1840,350 2090,350 2090,550 1840,550",
+                "color": 6
+            },
+            {
+                "id": "pagerduty",
+                "name": "Pager Duty",
+                "region": "1865,375 2115,375 2115,575 1860,575",
+                "color": 7
+            },
+            {
+                "id": "concourse",
+                "name": "Concourse/Vault",
+                "region": "1550,750 1800,750 1800,975 1550,975",
+                "color": 4
+            },
+            {
+                "id": "concourse",
+                "name": "Concourse",
+                "region": "1840,750 2090,750 2090,975 1840,975",
+                "color": 4
+            }
+        ],
+        "github": []
+    }
+}
