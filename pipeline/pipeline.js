@@ -184,7 +184,7 @@ let renderProjectTypes = () => {
             }
         });
 
-    let _targets = _svg.selectAll('.target');
+    let _targets = _svg.selectAll(".target");
     let _projectTypeTarget = _projectTypesGroup
         .append("line")
         .style("stroke", (d, i) => `${_colorScheme[i]}`)
@@ -202,7 +202,7 @@ let _addDefArrowhead = (i, color) => {
     _svg.append("svg:defs").append("svg:marker")
         .attr("id", `arrow-${i}`)
         .attr("viewBox", "0 -5 10 10")
-        .attr('refX', 5) //so that it comes towards the center.
+        .attr("refX", 5) //so that it comes towards the center.
         .attr("markerWidth", 2)
         .attr("markerHeight", 2)
         .attr("orient", "auto")
@@ -261,6 +261,10 @@ let renderPipelineTools = () => {
     let _pipeline_tools = _data["pipeline_tools"];
     let _toolNameHeight = 50;
     let _toolNameWidth = 200;
+    let _toolsListLeftMargin = 2300;
+    let _toolsListTopMargin = 10;
+    let _toolsListItemHeight = 30;
+    let _toolsListItemWidth = 250;
 
     for (let _set of Object.keys(_pipeline_tools)) {
         let _tools = _pipeline_tools[_set];
@@ -273,22 +277,65 @@ let renderPipelineTools = () => {
             .append("g")
             .attr("class", "tools");
 
+        let _mouseEnter = (d) => d3.selectAll(`.${_class}-${d.id}`).nodes().forEach(n => n.classList.add("outline"));
+        let _mouseLeave = (d) => d3.selectAll(`.${_class}-${d.id}`).nodes().forEach(n => n.classList.remove("outline"));
+
         let _toolBox = _toolsGroup
             .append("polygon")
             .attr("class", d => `${_class}-${d.id}`)
             .attr("points", d => d.region)
             .attr("style", d => `fill: ${_colorScheme[d.color - 1]};`)
-            .attr('fill-opacity', 0.2)
-            .on("mouseenter", d =>
-                d3.selectAll(`.${_class}-${d.id}`).nodes().forEach(n => n.classList.add("outline")))
-            .on("mouseleave", d =>
-                d3.selectAll(`.${_class}-${d.id}`).nodes().forEach(n => n.classList.remove("outline")));
+            .attr("fill-opacity", 0.2)
+            .on("mouseenter", _mouseEnter)
+            .on("mouseleave", _mouseLeave);
 
-        let _corner = (region, position) => parseInt(region.split(' ')[0].split(',')[position]);
+        let _corner = (region, position) => parseInt(region.split(" ")[0].split(",")[position]);
+
         let _toolText = _toolsGroup
             .append("text")
             .attr("x", (d) => _corner(d.region, 0) + 10)
             .attr("y", (d) => _corner(d.region, 1) + 20)
+            .attr("height", _toolNameHeight)
+            .attr("width", _toolNameWidth)
+            .text(d => d.name);
+
+        console.log(_tools);
+
+        let _toolsListData = Array.from(new Set(_tools.map(t => t.id)))
+            .map(id => {
+                let _firstTool = _tools.find(t => t.id == id);
+                return {
+                    id: id,
+                    name: _firstTool.name,
+                    color: _firstTool.color
+                };
+            })
+
+        console.log(_toolsListData);
+
+        let _toolsListGroup = _svg.selectAll("g.toolsList")
+            .data(_toolsListData)
+            .enter()
+            .append("g")
+            .attr("class", "tools");
+
+
+        let _toolsList = _toolsListGroup
+            .append("rect")
+            .attr("class", d => `${_class}-${d.id}`)
+            .attr("x", _toolsListLeftMargin)
+            .attr("y", (d, i) => _toolsListTopMargin + (i * _toolsListItemHeight))
+            .attr("height", _toolsListItemHeight)
+            .attr("width", _toolsListItemWidth)
+            .attr("style", d => `fill: ${_colorScheme[d.color - 1]};`)
+            .attr("fill-opacity", .2)
+            .on("mouseenter", _mouseEnter)
+            .on("mouseleave", _mouseLeave);
+
+        let _toolsListText = _toolsListGroup
+            .append("text")
+            .attr("x", (d) => _toolsListLeftMargin + 10)
+            .attr("y", (d, i) => _toolsListTopMargin + (i * _toolsListItemHeight) + 20)
             .attr("height", _toolNameHeight)
             .attr("width", _toolNameWidth)
             .text(d => d.name);
