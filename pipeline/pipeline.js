@@ -299,8 +299,6 @@ let renderPipelineTools = () => {
             .attr("width", _toolNameWidth)
             .text(d => d.name);
 
-        console.log(_tools);
-
         let _toolsListData = Array.from(new Set(_tools.map(t => t.id)))
             .map(id => {
                 let _firstTool = _tools.find(t => t.id == id);
@@ -311,14 +309,11 @@ let renderPipelineTools = () => {
                 };
             })
 
-        console.log(_toolsListData);
-
         let _toolsListGroup = _svg.selectAll("g.toolsList")
             .data(_toolsListData)
             .enter()
             .append("g")
             .attr("class", "tools");
-
 
         let _toolsList = _toolsListGroup
             .append("rect")
@@ -338,7 +333,10 @@ let renderPipelineTools = () => {
             .attr("y", (d, i) => _toolsListTopMargin + (i * _toolsListItemHeight) + 20)
             .attr("height", _toolNameHeight)
             .attr("width", _toolNameWidth)
-            .text(d => d.name);
+            .text(d => d.name)
+            .attr("style", "cursor: default")
+            .on("mouseenter", _mouseEnter)
+            .on("mouseleave", _mouseLeave);
 
     }
 }
